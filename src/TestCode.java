@@ -1,9 +1,14 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		ContainerMostWater test = new ContainerMostWater();
+		TreeNode root = new TreeNode(4);
+		root.left = new TreeNode(9);
+		root.right = new TreeNode(0);
+		root.left.left = new TreeNode(5);
+		root.left.right = new TreeNode(1);
 		
-		int[] height = {1,8,6,2,5,4,8,3,7};
-		System.out.println(test.maxArea(height));
+		SumRootToLeaf test = new SumRootToLeaf();
+		
+		System.out.println(test.sumNumbers(root));
 	}
 }
