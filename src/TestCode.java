@@ -1,14 +1,9 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		TreeNode root = new TreeNode(4);
-		root.left = new TreeNode(9);
-		root.right = new TreeNode(0);
-		root.left.left = new TreeNode(5);
-		root.left.right = new TreeNode(1);
+		TrapRainWater test = new TrapRainWater();
+		int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
 		
-		SumRootToLeaf test = new SumRootToLeaf();
-		
-		System.out.println(test.sumNumbers(root));
+		System.out.println(test.trap(height));
 	}
 }
