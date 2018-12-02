@@ -1,21 +1,28 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		BalancedTree test = new BalancedTree();
+		MatrixSearch test = new MatrixSearch();
+//		int[][] matrix = {
+//				{
+//					1,   4,  7, 11, 15
+//				},
+//				{
+//					2,   5,  8, 12, 19
+//				},
+//				{
+//					3,   6,  9, 16, 22
+//				},
+//				{
+//					10, 13, 14, 17, 24
+//				},
+//				{
+//					18, 21, 23, 26, 30
+//				}
+//		};
 		
-		TreeNode root = new TreeNode(1);
-		root.left = new TreeNode(2);
-		root.right = new TreeNode(5);
-		root.left.left = new TreeNode(3);
-		root.left.left.left = new TreeNode(7);
-		root.left.left.left.right = new TreeNode(11);
-		root.left.left.right = new TreeNode(8);
-		root.left.right = new TreeNode(4);
-		root.left.right.right = new TreeNode(9);
-		root.right.right = new TreeNode(6);
-		root.right.right.left = new TreeNode(10);
+		int[][] matrix = {{1, 1}};
 		
-		System.out.println(test.isBalanced(root));
+		System.out.println(test.searchMatrix(matrix, 2));
 		
 	}
 }
