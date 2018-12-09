@@ -1,15 +1,15 @@
 
 public class TrailingZeros {
 	public int trailingZeros(int n) {
+		int maxIndex = 0;
+		while(true) {
+			if(Math.pow(5, maxIndex) > n) break;
+			maxIndex++;
+		}
 		int count = 0;
-		long fact = 1;
-		for(int i = 1; i <= n; i++) {
-			fact *= i;
-			if(fact % 10 == 0) {
-				fact /= 10;
-				count ++;
-			}
-			fact %= 1000000000;
+		if(maxIndex == 1) return 0;
+		for(int i = 1; i < maxIndex; i++) {
+			count += n/Math.pow(5, i);
 		}
 		return count;
 	}
