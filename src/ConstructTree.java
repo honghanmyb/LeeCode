@@ -6,7 +6,7 @@ public class ConstructTree {
 	}
 	
 	private TreeNode newBuildTree(int[] preorder, int[] inorder, int preStart, int preEnd, int inStart, int inEnd) {
-		if(preStart == preEnd || inStart == inEnd) return null;
+		if(preStart == preEnd) return null;
 		TreeNode root = new TreeNode(preorder[preStart]);
 		int rootIndexIn = 0;
 		for(int i = inStart; i < inEnd; i++) {
@@ -24,11 +24,6 @@ public class ConstructTree {
 		int rightInEnd = inEnd;
 		int rightPreEnd = preEnd;
 		int rightPreStart = rightInStart - rightInEnd + rightPreEnd;
-		
-//		if(preStart < preEnd - 1 && inStart < inEnd - 1) {
-//			root.left = newBuildTree(preorder, inorder, leftPreStart, leftPreEnd, leftInStart, leftInEnd);
-//			root.right = newBuildTree(preorder, inorder, rightPreStart, rightPreEnd, rightInStart, rightInEnd);
-//		}
 
 		root.left = newBuildTree(preorder, inorder, leftPreStart, leftPreEnd, leftInStart, leftInEnd);
 		root.right = newBuildTree(preorder, inorder, rightPreStart, rightPreEnd, rightInStart, rightInEnd);
