@@ -6,16 +6,7 @@ public class TestCode {
 //		for(int i = 0; i < result.size(); i++) {
 //			System.out.println(result.get(i));
 //		}
-		MyStack test = new MyStack();
-		test.push(1);
-		test.push(2);;
-		test.push(3);
-		
-		System.out.println(test.top());
-		System.out.println(test.pop());
-		System.out.println(test.pop());
-		System.out.println(test.empty());
-		System.out.println(test.pop());
-		System.out.println(test.empty());
+		AddBinary test = new AddBinary();
+		System.out.println(test.addBinary("0", "0"));
 	}
 }
