@@ -2,7 +2,7 @@ import java.util.*;
 
 public class InorderTreversal {
 	
-	public List<Integer> inorderTreversal(TreeNode root){
+	public static List<Integer> inorderTreversal(TreeNode root){
 
 		if(root != null) {
 			inorderTreversal(root.left);
@@ -12,7 +12,7 @@ public class InorderTreversal {
 		return returnList;
 	}
 
-	private List<Integer> returnList = new ArrayList<Integer>();
+	private static List<Integer> returnList = new ArrayList<Integer>();
 	
 
 }

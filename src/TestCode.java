@@ -1,11 +1,12 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		PalindromePartitioning test = new PalindromePartitioning();
-		List<List<String>> result = test.partition("aab");
-		for(int i = 0; i < result.size(); i++) {
-			System.out.println(result.get(i));
-		}
+		ConstructTree test = new ConstructTree();
+		int[] preorder = {3,9,5,20,15,7};
+		int[] inorder = {5,9,3,15,20,7};
+		
+		
+		System.out.println(InorderTreversal.inorderTreversal(test.buildTree(preorder, inorder)));
 
 	}
 }
