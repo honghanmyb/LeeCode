@@ -19,11 +19,8 @@ public class BullsCows {
 		System.out.println(this.secret + " " + this.guess);
 		HashMap<Character, Integer> map = new HashMap<>();
 		for(int i = 0; i < this.secret.length(); i++) {
-			if(map.containsKey(this.secret.charAt(i))) {
-				map.put(this.secret.charAt(i), map.get(this.secret.charAt(i)) + 1);
-			}else {
-				map.put(this.secret.charAt(i), 1);
-			}
+			map.put(this.secret.charAt(i),
+					map.containsKey(this.secret.charAt(i))? map.get(this.secret.charAt(i)) + 1 : 1);
 
 		}
 		
@@ -31,7 +28,7 @@ public class BullsCows {
 			Integer position = map.get(this.guess.charAt(i));
 			if(position == null) continue;
 			if(position > 0) {
-				map.put(this.guess.charAt(i), map.get(this.guess.charAt(i)) - 1);
+				map.put(this.guess.charAt(i), position - 1);
 				cow++;
 			}
 		}
