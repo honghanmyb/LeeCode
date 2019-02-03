@@ -9,13 +9,11 @@ public class TestCode {
 //			System.out.println(eachRound);
 //		}
 
-		NQueensII test = new NQueensII();
-		List<List<String>> result = test.solveQueens(4);
-		for(int i = 0; i < result.size(); i++) {
-			for(int j = 0; j < result.get(i).size(); j++) {
-				System.out.println(result.get(i).get(j));
-			}
-			System.out.println("-----");
+		SlideWindowMax test = new SlideWindowMax();
+		int[] nums = {1,3,-1,-3,5,3,6,7};
+		int[] result = test.maxSlidingWindow(nums, 1);
+		for(int i = 0; i < result.length; i++) {
+			System.out.print(result[i] + " ");
 		}
 	}
 }
