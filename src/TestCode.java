@@ -9,11 +9,15 @@ public class TestCode {
 //			System.out.println(eachRound);
 //		}
 
-		SlideWindowMax test = new SlideWindowMax();
-		int[] nums = {1,3,-1,-3,5,3,6,7};
-		int[] result = test.maxSlidingWindow(nums, 1);
-		for(int i = 0; i < result.length; i++) {
-			System.out.print(result[i] + " ");
-		}
+		PopulateNextPointer test = new PopulateNextPointer();
+		TreeLinkNode root = new TreeLinkNode(0);
+		root.left = new TreeLinkNode(1);
+		root.right = new TreeLinkNode(2);
+		root.left.left = new TreeLinkNode(3);
+		root.left.right = new TreeLinkNode(4);
+		root.right.left = new TreeLinkNode(5);
+		root.right.right = new TreeLinkNode(6);
+		
+		test.connect(root);
 	}
 }
