@@ -14,6 +14,8 @@ public class FirstMinssingNumber {
 		return --missingPositive;*/
 		
 		/*****Building a hash set manually**********/
+		
+		
 		int[] records = new int[nums.length];
 		int missingPositive = 0;
 		for(int i = 0; i < records.length; i++) {

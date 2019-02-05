@@ -8,8 +8,9 @@ public class TestCode {
 //		for(List<Integer> eachRound : result) {
 //			System.out.println(eachRound);
 //		}
-
-		IsomorphicString test = new IsomorphicString();
-		System.out.println(test.isIsomorphic("aba", "baa"));
+		
+		CourseSchedule test = new CourseSchedule();
+		int[][] prerequisities = new int[][] {{1,0}, {0,1}, {3,2}, {4, 3}};
+		System.out.println(test.canFinish(6, prerequisities));
 	}
 }
