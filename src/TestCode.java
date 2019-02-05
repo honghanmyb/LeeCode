@@ -9,8 +9,26 @@ public class TestCode {
 //			System.out.println(eachRound);
 //		}
 		
-		CourseSchedule test = new CourseSchedule();
-		int[][] prerequisities = new int[][] {{1,0}, {0,1}, {3,2}, {4, 3}};
-		System.out.println(test.canFinish(6, prerequisities));
+//		Trie trie = new Trie();
+//		trie.insert("apple");
+//		System.out.println(trie.search("apple"));
+//		
+//		System.out.println(trie.search("app"));     // returns false
+//		System.out.println(trie.startsWith("app")); // returns true
+//		trie.insert("app");   
+//		System.out.println(trie.search("app"));  
+		
+		InsertionSortList test = new InsertionSortList();
+		
+		ListNode head = new ListNode(4);
+		head.next = new ListNode(2);
+		head.next.next = new ListNode(3);
+		head.next.next.next = new ListNode(1);
+		
+		ListNode newHead = test.insertionSortList(head);
+		while(newHead != null) {
+			System.out.print(newHead.val + " -> ");
+			newHead = newHead.next;
+		}
 	}
 }
