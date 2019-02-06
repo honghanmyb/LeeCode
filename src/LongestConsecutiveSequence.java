@@ -26,6 +26,6 @@ public class LongestConsecutiveSequence {
 		findConsecutive(number - 1, numSet);
 		findConsecutive(number + 1, numSet);
 	}
-	
+
 	private int currentLongest = 1;
 }
