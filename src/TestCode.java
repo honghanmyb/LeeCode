@@ -18,17 +18,7 @@ public class TestCode {
 //		trie.insert("app");   
 //		System.out.println(trie.search("app"));  
 		
-		InsertionSortList test = new InsertionSortList();
-		
-		ListNode head = new ListNode(4);
-		head.next = new ListNode(2);
-		head.next.next = new ListNode(3);
-		head.next.next.next = new ListNode(1);
-		
-		ListNode newHead = test.insertionSortList(head);
-		while(newHead != null) {
-			System.out.print(newHead.val + " -> ");
-			newHead = newHead.next;
-		}
+		EditDistance test = new EditDistance();
+		System.out.println(test.minDistance("horse", "ros"));
 	}
 }
