@@ -18,7 +18,12 @@ public class TestCode {
 //		trie.insert("app");   
 //		System.out.println(trie.search("app"));  
 		
-		EditDistance test = new EditDistance();
-		System.out.println(test.minDistance("horse", "ros"));
+		DPfindSlice test = new DPfindSlice();
+		int[] S = {1, 1, -1, 1, 1, -1, 1};
+//		int[] S = new int[1000];
+//		for(int i = 0; i < S.length; i++) {
+//			S[i] = -100;
+//		}
+		System.out.println(test.solution(S));
 	}
 }
