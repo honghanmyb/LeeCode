@@ -12,7 +12,7 @@ public class TestCode {
 		root.right.left = new TreeNode(0);
 		root.right.right = new TreeNode(8);
 		TreeNode p = root.left;
-		TreeNode q = root.left.right.right;
+		TreeNode q = root.right.right;
 		System.out.println(test.lowestCommonAncestor(root, p, q).val);
 	}
 }
