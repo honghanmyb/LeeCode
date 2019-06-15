@@ -35,6 +35,7 @@ public class PermutationsII {
 			temp.remove(temp.size() - 1);
 			numInList[index] = false;
 			return;
+		}
 		for(int i = 0; i < nums.length; i++) {
 			if(!numInList[i]) {
 				addNumToTemp(i, nums, numInList, temp, result);

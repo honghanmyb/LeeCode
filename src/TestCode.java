@@ -1,8 +1,12 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		int[] nums = null;
-		PermutationsII test = new PermutationsII();
-		System.out.println(test.permuteUnique(nums));
+		Trie test = new Trie();
+		test.insert("apple");
+		System.out.println(test.search("apple"));
+		System.out.println(test.search("appl"));
+		System.out.println(test.startsWith("app"));
+		test.insert("app");
+		System.out.println(test.search("app"));
 	}
 }

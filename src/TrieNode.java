@@ -6,6 +6,8 @@ public class TrieNode {
 	
 	public TrieNode[] chList;
 	
+	public boolean isEnd = false;
+	
 	public TrieNode() {
 		chList = new TrieNode[numChar];
 		
