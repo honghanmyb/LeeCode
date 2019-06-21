@@ -1,15 +1,12 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		MinStack minStack = new MinStack();
-		minStack.push(-2);
-		minStack.push(0);
-		minStack.push(-3);
-		System.out.println(minStack.getMin());
-		minStack.pop();
-		System.out.println(minStack.top());
-		System.out.println(minStack.getMin());
+		TreeNode root = new TreeNode(1);
+		root.left = new TreeNode(2);
+		root.right = new TreeNode(3);
+		root.left.left = new TreeNode(5);
+		BinaryTreePaths test = new BinaryTreePaths();
 		
-//		minStack.getMin();
+		System.out.println(test.binaryTreePaths(root));
 	}
 }
