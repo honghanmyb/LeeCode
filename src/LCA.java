@@ -9,7 +9,7 @@ import java.util.Set;
 public class LCA {
 	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 		Map<TreeNode, TreeNode> relations = new HashMap<>();
-		addRelations(root, null, relations);
+		addRelations(root, null, relations, p, q);
 		Set<TreeNode> set = new HashSet<>();
 		TreeNode temp = p;
 		while(temp != null) {
@@ -39,10 +39,12 @@ public class LCA {
 //		return false;
 //	}
 	
-	private void addRelations(TreeNode node, TreeNode ancester, Map<TreeNode, TreeNode> relations) {
+	private void addRelations(TreeNode node, TreeNode ancester, Map<TreeNode, TreeNode> relations,
+			TreeNode p, TreeNode q) {
 		if(node == null) return;
+		if(relations.containsKey(q) && relations.containsKey(p)) return;
 		relations.put(node, ancester);
-		addRelations(node.left, node, relations);
-		addRelations(node.right, node, relations);
+		addRelations(node.left, node, relations, p, q);
+		addRelations(node.right, node, relations, p, q);
 	}
 }
