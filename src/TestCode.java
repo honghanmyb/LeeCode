@@ -1,14 +1,15 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		int[] nums = {2,1};
-		ListNode head = Helper.createLinkedList(nums);
-		PartitionList test = new PartitionList();
-		head = test.partition(head, 2);
+		MinStack minStack = new MinStack();
+		minStack.push(-2);
+		minStack.push(0);
+		minStack.push(-3);
+		System.out.println(minStack.getMin());
+		minStack.pop();
+		System.out.println(minStack.top());
+		System.out.println(minStack.getMin());
 		
-		while(head != null) {
-			System.out.print(head.val + "-");
-			head = head.next;
-		}
+//		minStack.getMin();
 	}
 }
