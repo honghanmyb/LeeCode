@@ -24,6 +24,6 @@ public class PartitionList {
 			nodeBeforeCurrentNode = currentNode;
 			currentNode = currentNode.next;
 		}
-		return head;
+		return dummyHead.next;
 	}
 }
