@@ -13,16 +13,10 @@ public class TestCode {
 //		System.out.println(serialize);
 ////		test.deserialize(serialize);
 //		System.out.println(test.serialize(test.deserialize(serialize)));
+		UglyNumber test = new UglyNumber();
 		
-		List<Integer> list = new ArrayList<>();
-		for(int i = 0; i < 5; i++) {
-			list.add(i);
-		}
-		
-		PeekingIterator test = new PeekingIterator(list.iterator());
-		while(test.hasNext()) {
-			System.out.println("peek: " + test.peek());
-			System.out.println("next: " + test.next());
-		}
+		System.out.println(test.isUgly(6));
+		System.out.println(test.isUgly(8));
+		System.out.println(test.isUgly(14));
 	}
 }
