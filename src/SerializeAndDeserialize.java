@@ -11,6 +11,8 @@ public class SerializeAndDeserialize {
 				levelOrderQueue.add(currentHead.right);
 				serializeData.add(currentHead.val);
 			}else {
+				levelOrderQueue.add(null);
+				levelOrderQueue.add(null);
 				serializeData.add(null);
 			}
 		}
@@ -18,7 +20,31 @@ public class SerializeAndDeserialize {
 	}
 	
 	public TreeNode deserialize(String data) {
-		return null;
+		if(data.equals("[]")) return null;
+		String[] treeNodeVals = data.replace("[", "").replace("]", "").replaceAll(" ", "").split(",");
+		
+		if(treeNodeVals.length == 1) return new TreeNode(Integer.parseInt(treeNodeVals[0]));
+		
+		TreeNode[] treeNodes = new TreeNode[treeNodeVals.length];
+		for(int i = 0; i < treeNodeVals.length / 2; i++) {
+			if(!treeNodeVals[i].equals("null")) {
+				treeNodes[i] = new TreeNode(Integer.parseInt(treeNodeVals[i]));
+				treeNodes[i * 2 + 1] = treeNodeVals[i * 2 +1].equals("null")? null:
+					new TreeNode(Integer.parseInt(treeNodeVals[i * 2 + 1]));
+				treeNodes[i * 2 + 2] = treeNodeVals[i * 2 + 2].equals("null")? null:
+					new TreeNode(Integer.parseInt(treeNodeVals[i * 2 + 2]));
+				treeNodes[i].left = treeNodes[i * 2 + 1];
+				treeNodes[i].right = treeNodes[i * 2 + 2];
+			}
+		}
+		
+//		for(int i = 0; i < treeNodes.length / 2; i++) {
+//			if(treeNodes[i] != null) {
+//				treeNodes[i].left = treeNodes[i * 2 + 1];
+//				treeNodes[i].right = treeNodes[i * 2 + 2];
+//			}
+//		}
+		return treeNodes[0];
 	}
 	
 	private int getTreeLevel(TreeNode currentNode, int currentLevel) {
