@@ -1,17 +1,11 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		TreeNode root = new TreeNode(1);
-		root.left = new TreeNode(2);
-		root.right = new TreeNode(3);
-		root.right.right = new TreeNode(5);
-		root.right.left = new TreeNode(4);
-		root.right.left.right = new TreeNode(6);
-		
-		SerializeAndDeserialize test = new SerializeAndDeserialize();
-		String serialize = test.serialize(root);
-		System.out.println(serialize);
-//		test.deserialize(serialize);
-		System.out.println(test.serialize(test.deserialize(serialize)));
+		ConstructBSTFromInorderAndPostorder test = new ConstructBSTFromInorderAndPostorder();
+//		int[] inorder = {6, 9, 8, 3, 15, 20, 7};
+//		int[] postorder = {6, 8, 9, 15, 7, 20, 3};
+		int[] inorder = {2, 1};
+		int[] postorder = {2, 1};
+		System.out.println(TreeUtil.serialize(test.buildTree(inorder, postorder)));
 	}
 }
