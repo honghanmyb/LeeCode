@@ -2,9 +2,6 @@ import java.awt.Point;
 import java.util.*;
 public class SudokuSolver {
 	private char[] numbers = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-	private List<HashSet<Character>> rowSetList;
-	private List<HashSet<Character>> columnSetList;
-	private List<HashSet<Character>> blockSetList;
 	public void solveSudoku(char[][] board) {
 		solve(board, new Point(0, 0));
 	}
