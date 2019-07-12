@@ -5,13 +5,23 @@ public final class TestUtils {
 	}
 	
 	public static ListNode constructLinkedListFromArray(int[] nums) {
-		ListNode head = new ListNode(nums[0]);
-		ListNode temp = head.next;
-		for(int i = 1; i < nums.length; i++) {
+		ListNode dummyHead = new ListNode(0);
+		ListNode currentHead = dummyHead;
+		ListNode temp;
+		for(int i = 0; i < nums.length; i++) {
 			temp = new ListNode(nums[i]);
-			temp = temp.next;
+			currentHead.next = temp;
+			currentHead = temp;
 		}
 		
-		return head;
+		return dummyHead.next;
+	}
+	
+	public static void printLinkedList(ListNode head) {
+		ListNode temp = head;
+		while(temp != null) {
+			System.out.print(temp.val + "-> ");
+			temp = temp.next;
+		}
 	}
 }
