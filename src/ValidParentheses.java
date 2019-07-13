@@ -42,5 +42,4 @@ public class ValidParentheses {
 		stack.pop();
 		return true;
 	}
-
 }
