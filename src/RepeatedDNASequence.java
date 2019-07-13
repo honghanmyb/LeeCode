@@ -11,8 +11,7 @@ public class RepeatedDNASequence {
 		int endIndex = 10;
 		while(endIndex < s.length()) {
 			String key = s.substring(beginIndex++, endIndex++);
-			if(repeatedTable.contains(key)) {
-				repeatedTable.remove(key);
+			if(!repeatedTable.add(key)) {
 				resultTable.add(key);
 				continue;
 			}
@@ -20,7 +19,7 @@ public class RepeatedDNASequence {
 			repeatedTable.add(key);
 		}
 		List<String> repeatedDnaSequence = new ArrayList<>();
-		resultTable.forEach(key -> repeatedDnaSequence.add(key));
+		repeatedDnaSequence.addAll(resultTable);
 
 		return repeatedDnaSequence;
 	}
