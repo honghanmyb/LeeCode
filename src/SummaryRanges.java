@@ -7,8 +7,6 @@ public class SummaryRanges {
 		if(nums.length == 0) {
 			return ranges;
 		}
-		//use a for loop
-		//three variables: start num, current num, longestRangeNum
 		int rangeStartNum = nums[0], rangeCurrentNum = nums[0];
 		for(int i = 1; i < nums.length; i++) {
 			if(nums[i] - rangeCurrentNum == 1) {
@@ -30,7 +28,8 @@ public class SummaryRanges {
 			return;
 		}
 		
-		ranges.add(String.format("%s->%s", Integer.toString(rangeStartNum),
-					Integer.toString(rangeCurrentNum)));
+//		ranges.add(String.format("%s->%s", Integer.toString(rangeStartNum),
+//					Integer.toString(rangeCurrentNum)));
+		ranges.add(rangeStartNum + "->" + rangeCurrentNum);
 	}
 }
