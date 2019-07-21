@@ -1,9 +1,7 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		int[] listNodeArray = {1,1};
-		ListNode head = TestUtils.constructLinkedListFromArray(listNodeArray);
-		RemoveLinkedListElements test = new RemoveLinkedListElements();
-		TestUtils.printLinkedList(test.removeElements(head, 1));
+		RectangleArea test = new RectangleArea();
+		System.out.println(test.computeArea(-1500000001, 0, -1500000000, 1, 1500000000, 0, 1500000001, 1));
 	}
 }
