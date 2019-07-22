@@ -9,30 +9,32 @@ public class MergeIntervals {
 	public int[][] merge(int[][] intervals){
 		if(intervals.length == 0) return intervals;
 		Arrays.sort(intervals, (interval1, interval2) -> interval1[0] - interval2[0]);
-		Set<int[]> mergedSet = new HashSet<>();//think of another approache than set
+		ArrayList<int[]> mergedList = new ArrayList<>();//think of another approache than set
 		int[] lastArray = intervals[0];
-		mergedSet.add(lastArray);
+		int lastArrayIndex = 0;
+		mergedList.add(lastArray);
 		for(int i = 1; i < intervals.length; i++) {
 			int[] currentArray = intervals[i];
 			if(currentArray[0] <= lastArray[1]) {
-				mergedSet.remove(lastArray);
+				mergedList.remove(lastArrayIndex);
 				int[] newArray = {Math.min(lastArray[0], currentArray[0]),
 						Math.max(lastArray[1], currentArray[1])};
-				mergedSet.add(newArray);
+				mergedList.add(newArray);
 				lastArray = newArray;
 				continue;
 			}
 			
-			mergedSet.add(currentArray);
+			mergedList.add(currentArray);
 			lastArray = currentArray;
+			lastArrayIndex++;
 		}
 		
-		Iterator setIterator = mergedSet.iterator();
-		int[][] result = new int[mergedSet.size()][];
-		for(int i = 0; i < result.length; i++) {
-			result[i] = (int[]) setIterator.next();
-		}
-		
+//		Iterator setIterator = mergedSet.iterator();
+		int[][] result = mergedList.toArray(new int[mergedList.size()][]);
+//		for(int i = 0; i < result.length; i++) {
+//			result[i] = (int[]) setIterator.next();
+//		}
+//		
 		return result;
 	}
 }
