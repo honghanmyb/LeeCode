@@ -28,13 +28,7 @@ public class MergeIntervals {
 			lastArray = currentArray;
 			lastArrayIndex++;
 		}
-		
-//		Iterator setIterator = mergedSet.iterator();
 		int[][] result = mergedList.toArray(new int[mergedList.size()][]);
-//		for(int i = 0; i < result.length; i++) {
-//			result[i] = (int[]) setIterator.next();
-//		}
-//		
 		return result;
 	}
 }
