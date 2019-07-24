@@ -1,8 +1,8 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		HIndexII test = new HIndexII();
-		int[] citations = {11, 12};
-		System.out.println(test.hIndex(citations));
+		BSTMinDepth test = new BSTMinDepth();
+		TreeNode root = TreeUtil.deserialize("[3,9,20,null,null,15,7]");
+		System.out.println(test.minDepth(root));
 	}
 }

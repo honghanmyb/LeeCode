@@ -23,7 +23,7 @@ public final class TreeUtil {
     }
 
     // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
+    public static TreeNode deserialize(String data) {
         if(data.equals("[]")) return null;
         String[] treeNodeVals = data.replace("[", "").replace("]", "").replaceAll(" ", "").split(",");
 		TreeNode[] treeNodes = new TreeNode[treeNodeVals.length];
