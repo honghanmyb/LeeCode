@@ -11,6 +11,9 @@ public class BSTMinDepth {
 	}
 	
 	private void traversalTree(TreeNode treeNode, int currentLevel) {
+		if(currentLevel >= minDepth) {
+			return;
+		}
 		TreeNode leftNode = treeNode.left;
 		TreeNode rightNode = treeNode.right;
 		if(leftNode == null && rightNode == null) {
