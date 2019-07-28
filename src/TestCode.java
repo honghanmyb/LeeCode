@@ -1,9 +1,10 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		MinSizeSubarraySum test = new MinSizeSubarraySum();
-		int[] nums = new int[] {2,3,1,2,4,3};
-		int s = 4;
-		System.out.println(test.minSubArrayLen(s, nums));
+		RecoverBST test = new RecoverBST();
+//		TreeNode root = TreeUtil.deserialize("[3,1,4,null,null,2, null]");
+		TreeNode root = TreeUtil.deserialize("[1,3,null,null,2]");
+		test.recoverTree(root);
+		System.out.println(TreeUtil.serialize(root));
 	}
 }
