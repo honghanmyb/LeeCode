@@ -1,13 +1,14 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		IntersectionOfTwoLinkedLists test = new IntersectionOfTwoLinkedLists();
-		ListNode headA = TestUtils.constructLinkedListFromArray(new int[] {4,1,8,4,5});
-		ListNode headB = new ListNode(5);
-		headB.next = new ListNode(0);
-		headB.next.next = new ListNode(1);
-		headB.next.next.next = headA.next.next;
+		PopulateNextRightPointerInEachNodeII test = new PopulateNextRightPointerInEachNodeII();
+		Node root = new Node(1);
+		root.left = new Node(2);
+		root.right = new Node(3);
+		root.left.left = new Node(4);
+		root.left.right = new Node(5);
 		
-		System.out.println(test.getIntersectionNode(headA, headB).val);
+		root.right.right = new Node(7);
+		test.connect(root);
 	}
 }
