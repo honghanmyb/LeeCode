@@ -3,6 +3,9 @@ import java.util.Queue;
 
 public class PopulateNextRightPointerInEachNodeII {
 	public Node connect(Node root) {
+		if(root == null) {
+			return null;
+		}
 		Queue<Node> connectQueue = new LinkedList<>();
 		Queue<Node> childNodeQueue = new LinkedList<>();
 		
