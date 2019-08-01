@@ -1,14 +1,8 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		PopulateNextRightPointerInEachNodeII test = new PopulateNextRightPointerInEachNodeII();
-		Node root = new Node(1);
-		root.left = new Node(2);
-		root.right = new Node(3);
-		root.left.left = new Node(4);
-		root.left.right = new Node(5);
-		
-		root.right.right = new Node(7);
-		test.connect(root);
+		HIndex test = new HIndex();
+		int[] citations = new int[] {0,0,0,0,0};
+		System.out.print(test.hIndex(citations));
 	}
 }
