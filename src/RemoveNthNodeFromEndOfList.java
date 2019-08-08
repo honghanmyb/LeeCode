@@ -4,18 +4,19 @@ public class RemoveNthNodeFromEndOfList {
 	public ListNode removeNthFromEnd(ListNode head, int n) {
 		ListNode dummyHead = new ListNode(0);
 		dummyHead.next = head;
-		Stack<ListNode> stack = new Stack<>();
 		ListNode temp = dummyHead;
+		int listNodeNum = 0;
 		while(temp != null) {
-			stack.add(temp);
+			listNodeNum++;
 			temp = temp.next;
 		}
 		
-		for(int i = 0; i < n; i++) {
-			temp = stack.pop();
+		temp = dummyHead;
+		for(int i = 0; i < listNodeNum - n - 1; i++) {
+			temp = temp.next;
 		}
-		ListNode nextNode = stack.pop();
-		nextNode.next = temp.next;
+		ListNode nodeToRemove = temp.next;
+		temp.next = nodeToRemove.next;
 		return dummyHead.next;
 	}
 }
