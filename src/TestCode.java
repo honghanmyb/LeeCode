@@ -1,8 +1,10 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		HIndex test = new HIndex();
-		int[] citations = new int[] {0,0,0,0,0};
-		System.out.print(test.hIndex(citations));
+		GasStation test = new GasStation();
+		int[] gas = new int[] {5, 1, 2, 3, 4};
+		int[] cost = new int[] {4, 4, 1, 5, 1};
+		
+		System.out.println(test.canCompleteCircuit(gas, cost));
 	}
 }
