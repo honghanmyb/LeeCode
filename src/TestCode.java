@@ -1,8 +1,8 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		RemoveNthNodeFromEndOfList test = new RemoveNthNodeFromEndOfList();
-		ListNode head = TestUtils.constructLinkedListFromArray(new int[] {1,2,3,4,5});
-		TestUtils.printLinkedList(test.removeNthFromEnd(head, 5));
+		BestTimeToBuyAndSellStockIII test = new BestTimeToBuyAndSellStockIII();
+		int[] prices = new int[] {7,6,4,3,1};
+		System.out.println(test.maxProfit(prices));
 	}
 }
