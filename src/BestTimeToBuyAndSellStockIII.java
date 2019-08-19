@@ -1,6 +1,9 @@
 import java.util.*;
 public class BestTimeToBuyAndSellStockIII {
 	public int maxProfit(int[] prices) {
+		if(prices.length == 0) {
+			return 0;
+		}
 		int minPrice = prices[0], maxProfit = 0;
 		int minPricePos = 0, maxProfitPos = 0, tempMinPricePos = 0;
 		for(int i = 0; i < prices.length; i++) {
@@ -15,7 +18,9 @@ public class BestTimeToBuyAndSellStockIII {
 				maxProfitPos = i;
 			}
 		}
-		if(maxProfit == 0) return 0;
+		if(maxProfit == 0) {
+			return 0;
+		}
 		
 		int leftMaxProfit = getMaxProfitInSubArray(prices, 0, minPricePos - 1);
 		int rightMaxProfit = getMaxProfitInSubArray(prices, maxProfitPos + 1, prices.length - 1);
@@ -41,6 +46,5 @@ public class BestTimeToBuyAndSellStockIII {
 			}
 		}
 		return maxProfit;
-		
 	}
 }
