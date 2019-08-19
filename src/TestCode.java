@@ -1,14 +1,9 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		MaximalRectangle test = new MaximalRectangle();
-		char[][] matrix = new char[][] {
-			new char[] {'1','0','1','1','1'},
-			new char[] {'0','1','0','1','0'},
-			new char[] {'1','1','0','1','1'},
-			new char[] {'1','1','0','1','1'},
-			new char[] {'0','1','1','1','1'}
-		};
-		System.out.println(test.maximalRectangle(matrix));
+		BasicCalculatorII test = new BasicCalculatorII();
+		System.out.println(test.calculate("3+2*2"));
+//		System.out.println(test.calculate(" 3+5 / 2 "));
+//		System.out.println(test.calculate("2*3+4"));
 	}
 }
