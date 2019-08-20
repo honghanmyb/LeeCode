@@ -10,62 +10,61 @@ public class BasicCalculatorII {
 		int result = 0;
 		boolean shouldPop = false;
 		char operatorCh = '*';
-		s = s.replaceAll(" ", "");
-		Stack<String> stack = new Stack<>();
-		int currentIndex = 0, startIndex = 0;
-		while(currentIndex < s.length()) {
-			char ch = s.charAt(currentIndex);
-			if(ch >= '0' && ch <= '9') {
-				currentIndex++;
-				if(currentIndex >= s.length()) {
-					stack.push(s.substring(startIndex, currentIndex));
-					if(shouldPop) {
-						shouldPop = false;
-						int later = Integer.parseInt(stack.pop());
-						int previous = Integer.parseInt(stack.pop());
-						if(operatorCh == '*') {
-							stack.push(Integer.toString(previous * later));
-						}else {
-							stack.push(Integer.toString(previous / later));
-						}
-					}
-				}
+		Stack<Integer> stack = new Stack<>();
+		int num = 0;
+		for(int i = 0; i < s.length(); i++) {
+			char ch = s.charAt(i);
+			if(ch == ' ') {
 				continue;
 			}
-			if(ch == '+' || ch == '-' || ch == '*' || ch == '/') {
-				stack.push(s.substring(startIndex, currentIndex));
-				currentIndex++;
-				startIndex = currentIndex;
+			if(ch >= '0' && ch <= '9') {
+				num = num * 10 + ch - '0';
+			}else {
 				if(shouldPop) {
 					shouldPop = false;
-					int later = Integer.parseInt(stack.pop());
-					int previous = Integer.parseInt(stack.pop());
+					int current = num;
+					int previous = stack.pop();
 					if(operatorCh == '*') {
-						stack.push(Integer.toString(previous * later));
+						stack.push(previous * current);
 					}else {
-						stack.push(Integer.toString(previous / later));
+						stack.push(previous / current);
 					}
+					num = 0;
+				}else {
+					stack.push(num);
+					num = 0;
 				}
-				if(ch == '+' || ch == '-') {
-					stack.push(Character.toString(ch));
+				if(ch == '+') {
+					stack.add(-1);
+				}else if(ch == '-') {
+					stack.add(-2);
 				}else {
 					shouldPop = true;
 					operatorCh = ch;
 				}
 			}
 		}
-		if(stack.isEmpty()) {
-			return Integer.parseInt(s);
+		if(shouldPop) {
+			int current = num;
+			int previous = stack.pop();
+			if(operatorCh == '*') {
+				stack.push(previous * current);
+			}else {
+				stack.push(previous / current);
+			}
+		}else {
+			stack.push(num);
 		}
-		Stack<String> reversedStack = new Stack<>();
+
+		Stack<Integer> reversedStack = new Stack<>();
 		while(!stack.isEmpty()) {
 			reversedStack.push(stack.pop());
 		}
-		result = Integer.parseInt(reversedStack.pop());
+		result = reversedStack.pop();
 		while(!reversedStack.isEmpty()) {
-			String operator = reversedStack.pop();
-			int nextNum = Integer.parseInt(reversedStack.pop());
-			if(operator.equals("+")) {
+			int operator = reversedStack.pop();
+			int nextNum = reversedStack.pop();
+			if(operator == -1) {
 				result += nextNum;
 			}else {
 				result -= nextNum;
