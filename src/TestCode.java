@@ -1,7 +1,8 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		PermutationSequence test = new PermutationSequence();
-		System.out.println(test.getPermutation(3, 3));
+		RemoveDuplicatesFromSortedListII test = new RemoveDuplicatesFromSortedListII();
+		ListNode head = TestUtils.constructLinkedListFromArray(new int[] { 2, 1});
+		TestUtils.printLinkedList(test.deleteDuplicates(head));
 	}
 }
