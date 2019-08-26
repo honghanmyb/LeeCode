@@ -1,8 +1,15 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		RemoveDuplicatesFromSortedListII test = new RemoveDuplicatesFromSortedListII();
-		ListNode head = TestUtils.constructLinkedListFromArray(new int[] { 2, 1});
-		TestUtils.printLinkedList(test.deleteDuplicates(head));
+		MaximalSquare test = new MaximalSquare();
+		char[][] matrix = new char[][] {
+			{'0', '1', '1', '0', '1'},
+			{'1', '0', '0', '1', '0'},
+			{'0', '1', '1', '1', '0'},
+			{'1', '1', '1', '1', '0'},
+			{'1', '1', '1', '1', '1'},
+			{'0', '0', '0', '0', '0'}
+		};
+		System.out.println(test.maximalSquare(matrix));
 	}
 }
