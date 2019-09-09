@@ -1,8 +1,8 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		MaximumGap test = new MaximumGap();
-		int[] nums = new int[] {2,99999999};
-		System.out.println(test.maximumGap(nums));
+		SearchRotatedSortedArray test = new SearchRotatedSortedArray();
+		int[] nums = new int[] {1, 3};
+		System.out.println(test.search(nums, 3));
 	}
 }
