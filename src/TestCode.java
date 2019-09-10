@@ -1,8 +1,7 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		ZigZagConversion test = new ZigZagConversion();
-		String s = "PAYPALISHIRING";
-		System.out.println(test.convert(s, 2));
+		MajorityElementII test = new MajorityElementII();
+		System.out.println(test.majorityElement(new int[] {3, 2, 3}));
 	}
 }
