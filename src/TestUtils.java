@@ -34,4 +34,12 @@ public final class TestUtils {
 		}
 		System.out.println(list);
 	}
+	
+	public static  void printArray(int[] array) {
+		List<Integer> list = new ArrayList<>(array.length);
+		for(int element: array) {
+			list.add(element);
+		}
+		System.out.println(list);
+	}
 }
