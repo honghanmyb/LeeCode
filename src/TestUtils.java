@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public final class TestUtils {
 	private TestUtils() {
@@ -23,5 +25,13 @@ public final class TestUtils {
 			System.out.print(temp.val + "-> ");
 			temp = temp.next;
 		}
+	}
+	
+	public static <T> void printArray(T[] array) {
+		List<T> list = new ArrayList<>(array.length);
+		for(T element: array) {
+			list.add(element);
+		}
+		System.out.println(list);
 	}
 }
