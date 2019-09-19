@@ -8,27 +8,55 @@ public class FourSum {
 	public List<List<Integer>> fourSum(int[] nums, int target){
 		Arrays.sort(nums);
 		List<List<Integer>> fourSumList = new ArrayList<>();
-		Set<List<Integer>> fourSumSet = new HashSet<>();
 		if(nums.length < 4) {
 			return fourSumList;
 		}
+		boolean lastRoundFindMatchI = false;
 		for(int i = 0; i < nums.length; i++) {
+			if(i > 0 && nums[i] == nums[i - 1] && lastRoundFindMatchI) {
+				continue;
+			}
+			lastRoundFindMatchI = false;
+			boolean lastRoundFindMatchJ = false;
 			for(int j = i + 1; j < nums.length; j++) {
-				int currentSum = nums[i] + nums[j];
-				int currentTarget = target - currentSum;
-				Set<Integer> set = new HashSet<>();
-				for(int k = j + 1; k < nums.length; k++) {
-					if(set.contains(currentTarget - nums[k])) {
-						List<Integer> currentList = Arrays.asList(nums[i], nums[j], nums[k], currentTarget - nums[k]);
-						if(!fourSumSet.contains(currentList)) {
-							fourSumSet.add(currentList);
+				if(nums[j] == nums[j - 1] && lastRoundFindMatchJ) {
+					continue;
+				}
+				lastRoundFindMatchJ = false;
+				int currentTarget = target - nums[i] - nums[j];
+				int head = j + 1, tail = nums.length - 1;
+				boolean previousFindMatch = false;
+				while(head < tail) {
+					if(previousFindMatch) {
+						if(nums[head] != nums[head - 1] && nums[tail] != nums[tail + 1]) {
+							previousFindMatch = false;
 						}
+						if(nums[head] == nums[head - 1]) {
+							head++;
+						}
+						if(nums[tail] == nums[tail + 1]) {
+							tail--;
+						}
+					}else {
+						int currentSum = nums[head] + nums[tail];
+						if(currentSum < currentTarget) {
+							head++;
+							continue;
+						}
+						if(currentSum > currentTarget) {
+							tail--;
+							continue;
+						}
+						lastRoundFindMatchJ = true;
+						lastRoundFindMatchI = true;
+						fourSumList.add(Arrays.asList(nums[i], nums[j], nums[head], nums[tail]));
+						head++;
+						tail--;
+						previousFindMatch = true;
 					}
-					set.add(nums[k]);
 				}
 			}
 		}
-		fourSumList.addAll(fourSumSet);
 		return fourSumList;
 	}
 }
