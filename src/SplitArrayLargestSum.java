@@ -2,61 +2,30 @@ import java.util.PriorityQueue;
 
 public class SplitArrayLargestSum {
     public int splitArray(int[] nums, int m) {
-        int total = 0;
-        for(int num: nums){
-            total += num;
-        }
-        if(m == 1){
-            return total;
-        }
-        PriorityQueue<SubArray> heap = new PriorityQueue<>(m, (sub1, sub2) -> sub2.totalNum - sub1.totalNum);
-        heap.add(new SubArray(0, nums.length - 1, total));
-        while(heap.size() < m){
-            SubArray largestSub = heap.poll();
-            if(largestSub.startIndex == largestSub.endIndex){
-                return largestSub.totalNum;
-            }
-            int middleIndex = getMiddleIndex(nums, largestSub.startIndex, largestSub.endIndex, 
-                                            largestSub.totalNum);
-            int firstTotal = 0;
-            for(int i = largestSub.startIndex; i <= middleIndex; i++){
-                firstTotal += nums[i];
-            }
-            heap.add(new SubArray(largestSub.startIndex, middleIndex, firstTotal));
-            heap.add(new SubArray(middleIndex + 1, largestSub.endIndex, largestSub.totalNum - firstTotal));
-        }
-        return heap.peek().totalNum;
-    }
-    
-    private int getMiddleIndex(int[] nums, int startIndex, int endIndex, int totalNum){
-        if(startIndex + 1 >= endIndex ){
-            return startIndex;
-        }
-        int firstTotal = 0;
-        int minMaxTotal = totalNum;
-        int middleIndex = startIndex;
-        for(int i = startIndex; i < endIndex; i++){
-            firstTotal += nums[i];
-            totalNum -= nums[i];
-            int currentMinMax = Integer.max(firstTotal, totalNum);
-            if(minMaxTotal > currentMinMax){
-                minMaxTotal = currentMinMax;
-                middleIndex = i;
+        int[][] minMaxSum = new int[m][nums.length];
+        minMaxSum[0][0] = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            minMaxSum[0][i] = nums[i] + minMaxSum[0][i - 1];
+            if(minMaxSum[0][i] < 0){
+                return Integer.MAX_VALUE;
             }
         }
-        System.out.println(middleIndex);
-        return middleIndex;
-    }
-    
-    private class SubArray{
-        public int startIndex;
-        public int endIndex;
-        public int totalNum;
-        
-        public SubArray(int startIndex, int endIndex, int totalNum){
-            this.startIndex = startIndex;
-            this.endIndex = endIndex;
-            this.totalNum = totalNum;
+        for(int i = 1; i < m; i++){
+            for(int j = 0; j < nums.length; j++){
+                if(j < i){
+                    minMaxSum[i][j] = Integer.MAX_VALUE;
+                    continue;
+                }
+                int minMax = minMaxSum[0][j];
+                int currentMinMax = minMax;
+                for(int k = 0; k <= j; k++){
+                    currentMinMax -= nums[k];
+                    int currentMax = Integer.max(minMaxSum[i - 1][k], currentMinMax);
+                    minMax = Integer.min(minMax, currentMax);
+                }
+                minMaxSum[i][j] = minMax;
+            }
         }
+        return minMaxSum[m - 1][nums.length - 1];
     }
 }
