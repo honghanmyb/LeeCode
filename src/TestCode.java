@@ -1,7 +1,8 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		PriorityQueue<Integer> test = new PriorityQueue<>(5, (int1, int2) -> int1 - int2);
-		
+		SplitArrayMinimumSum test = new SplitArrayMinimumSum();
+		int[] nums = new int[] {Integer.MAX_VALUE, 1};
+		System.out.println(test.splitArray(nums, 2));
 	}
 }
