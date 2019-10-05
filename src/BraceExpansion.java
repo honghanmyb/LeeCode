@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,7 +8,6 @@ public class BraceExpansion {
         String[] elements = S.split("\\{|}");
         List<String> combinations = new ArrayList<>();
         addAllCombinations("", 0, elements, combinations);
-        Collections.sort(combinations);
         return combinations.toArray(new String[combinations.size()]);
     }
     
@@ -18,6 +18,7 @@ public class BraceExpansion {
             return;
         }
         String[] currentElementSplits = elements[elementIndex].split(",");
+        Arrays.sort(currentElementSplits);
         for(String elementSplit: currentElementSplits){
             addAllCombinations(previous + elementSplit, elementIndex + 1, elements, combinations);
         }
