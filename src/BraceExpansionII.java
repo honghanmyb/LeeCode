@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class BraceExpansionII {
     public List<String> braceExpansionII(String expression) {
-        Set<String> set = new TreeSet<>();
+        Set<String> set = new HashSet<>();
         int firstLeftBraceIndex = 0;
         while(firstLeftBraceIndex < expression.length() && expression.charAt(firstLeftBraceIndex) != '{'){
             firstLeftBraceIndex += 1;
@@ -105,7 +107,7 @@ public class BraceExpansionII {
         }
         List<String> total = new ArrayList<>(set.size());
         total.addAll(set);
-        // Collections.sort(total);
+        Collections.sort(total);
         return total;
     }
 }
