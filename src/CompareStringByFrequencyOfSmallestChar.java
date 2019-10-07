@@ -19,21 +19,22 @@ public class CompareStringByFrequencyOfSmallestChar {
     }
     
     private int countNumLarger(int queryFrequency, int[] wordFrequency){
-        // int head = 0, tail = wordFrequency.length - 1;
-        // while(head <= tail){
-        //     int mid = head + (tail - head) / 2;
-        //     if(wordFrequency[mid] > queryFrequency){
-        //         tail = mid - 1;
-        //     }else{
-        //         head = mid ;
-        //     }
-        // }
-        for(int i = 0; i < wordFrequency.length; i++){
-            if(wordFrequency[i] > queryFrequency){
-                return wordFrequency.length - i;
+        if(queryFrequency < wordFrequency[0]){
+            return wordFrequency.length;
+        }
+        if(queryFrequency >= wordFrequency[wordFrequency.length - 1]){
+            return 0;
+        }
+        int head = 0, tail = wordFrequency.length - 1;
+        while(head <= tail){
+            int mid = head + (tail - head) / 2;
+            if(wordFrequency[mid] > queryFrequency){
+                tail = mid - 1;
+            }else{
+                head = mid + 1;
             }
         }
-        return 0;
+        return wordFrequency.length - tail - 1;
     }
     
     private int smallestCharFrequency(String word){
