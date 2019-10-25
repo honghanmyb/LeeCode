@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class AutocompleteSystem {
     private RecordTrie dummy;
     private String previousInput;
     private RecordTrie currentTrie;
+    private int totalWordCount;
     public AutocompleteSystem(String[] sentences, int[] times) {
         dummy = new RecordTrie("", 0);
         for(int i = 0; i < sentences.length; i++){
@@ -13,6 +15,7 @@ public class AutocompleteSystem {
         }
         previousInput = "";
         currentTrie = dummy;
+        totalWordCount = sentences.length;
     }
     
     public List<String> input(char c) {
@@ -22,6 +25,7 @@ public class AutocompleteSystem {
             }
             this.previousInput = "";
             this.currentTrie = this.dummy;
+            this.totalWordCount += 1;
             return new ArrayList<>(); 
         }
         if(this.currentTrie == null){
@@ -33,19 +37,25 @@ public class AutocompleteSystem {
             previousInput += c;
             return new ArrayList<>();
         }
-        List<HotWord> hotWords = new ArrayList<>();
-        currentTrie.search(hotWords, previousInput);
-        Collections.sort(hotWords, (word1, word2) -> {
+        PriorityQueue<HotWord> hotWords = new PriorityQueue<>(this.totalWordCount, (word1, word2) -> {
            if(word1.time != word2.time){
                return word2.time - word1.time;
            }else{
                return word1.word.compareTo(word2.word);
            }
         });
+         currentTrie.search(hotWords, previousInput);
+        // Collections.sort(hotWords, (word1, word2) -> {
+        //    if(word1.time != word2.time){
+        //        return word2.time - word1.time;
+        //    }else{
+        //        return word1.word.compareTo(word2.word);
+        //    }
+        // });
         int size = Integer.min(3, hotWords.size());
         List<String> topHotWords = new ArrayList<>(size);
         for(int i = 0; i < size; i++){
-            topHotWords.add(hotWords.get(i).word);
+            topHotWords.add(hotWords.poll().word);
         }
         previousInput += c;
         return topHotWords;
@@ -105,7 +115,7 @@ public class AutocompleteSystem {
             }
         }
         
-        public void search(List<HotWord> hotWords, String previous){
+        public void search(PriorityQueue<HotWord> hotWords, String previous){
             if(this.isEnd){
                 hotWords.add(new HotWord(previous + this.ch, this.time));
             }
