@@ -1,0 +1,11 @@
+== Important Notes
+
+1.for comparator,
+```
+(a1, a2) -> {
+	return a1 - a2 //result is in incresing order
+}
+
+(a1, a2) -> {
+	return a2 - a1 //result is in decresing order
+}
