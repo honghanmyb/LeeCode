@@ -1,15 +1,12 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		String[] words = new String[] {"i love you","island","iroman","i love leetcode"};
-		int[] times = new int[] {5,3,2,2};
-		AutocompleteSystem test = new AutocompleteSystem(words, times);
-		System.out.println(test.input('i'));
-		System.out.println(test.input(' '));
-		System.out.println(test.input('a'));
-		System.out.println(test.input('#'));
-		System.out.println(test.input('i'));
-		System.out.println(test.input(' '));
-		System.out.println(test.input('a'));
+		CampusBikeII test = new CampusBikeII();
+		int[][] workers = new int[][] {
+			{714,586}, {117,123}, {263,151}, {15,789}, {603,737}, {542,460}
+		};
+		int[][] bikes = new int[][] {
+			{823, 843}, {}, {}, {}, {}, {}, {},{}
+		};
 	}
 }
