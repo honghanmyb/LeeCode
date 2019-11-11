@@ -14,6 +14,9 @@ public class WordBreakII {
             maxLength = Integer.max(maxLength, word.length());
             wordSet.add(word);
         }
+        if(!canForm(s, wordSet)){
+            return new ArrayList<>();
+        }
         ArrayList<String>[] table = new ArrayList[s.length() + 1];
         table[0] = new ArrayList<>();
         table[0].add("");
@@ -38,5 +41,18 @@ public class WordBreakII {
             }
         }
         return table[s.length()];
+    }
+    
+    private boolean canForm(String s, Set<String> wordSet){
+        boolean[] canFormS = new boolean[s.length() + 1];
+        canFormS[0] = true;
+        for(int i = 1; i < canFormS.length; i++){
+            for(int j = i; j < canFormS.length; j++){
+                if(canFormS[i - 1] && wordSet.contains(s.substring(i - 1, j))){
+                    canFormS[j] = true;
+                }
+            }
+        }
+        return canFormS[s.length()];
     }
 }
