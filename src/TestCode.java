@@ -8,5 +8,6 @@ public class TestCode {
 		int[][] bikes = new int[][] {
 			{823, 843}, {}, {}, {}, {}, {}, {},{}
 		};
+		Arrays.asList(table.[s.length() - 1].split(","));
 	}
 }
