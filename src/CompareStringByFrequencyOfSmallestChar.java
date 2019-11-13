@@ -2,59 +2,34 @@ import java.util.Arrays;
 
 public class CompareStringByFrequencyOfSmallestChar {
     public int[] numSmallerByFrequency(String[] queries, String[] words) {
-        int[] queryFrequency = new int[queries.length];
-        int[] wordFrequency = new int[words.length];
-        for(int i = 0; i < queries.length; i++){
-            queryFrequency[i] = smallestCharFrequency(queries[i]);
-        }
+        int[] smallestFrequencyCount = new int[11];
         for(int i = 0; i < words.length; i++){
-            wordFrequency[i] = smallestCharFrequency(words[i]);
+            smallestFrequencyCount[smallestCharFrequency(words[i]) - 1]++;
         }
-        Arrays.sort(wordFrequency);
+        for(int i = 9; i >= 0; i--){
+            smallestFrequencyCount[i] += smallestFrequencyCount[i + 1];
+        }
         int[] numSmaller = new int[queries.length];
-        for(int i = 0; i < numSmaller.length; i++){
-            numSmaller[i] = countNumLarger(queryFrequency[i], wordFrequency);
+        for(int i = 0; i < queries.length; i++){
+            numSmaller[i] = smallestFrequencyCount[smallestCharFrequency(queries[i])];
         }
         return numSmaller;
     }
     
-    private int countNumLarger(int queryFrequency, int[] wordFrequency){
-        if(queryFrequency < wordFrequency[0]){
-            return wordFrequency.length;
-        }
-        if(queryFrequency >= wordFrequency[wordFrequency.length - 1]){
+    private int smallestCharFrequency(String s){
+        if(s.equals("")){
             return 0;
         }
-        int head = 0, tail = wordFrequency.length - 1;
-        while(head <= tail){
-            int mid = head + (tail - head) / 2;
-            if(wordFrequency[mid] > queryFrequency){
-                tail = mid - 1;
-            }else{
-                head = mid + 1;
+        int frequency = 1;
+        int smallestChar = s.charAt(0);
+        for(int i = 1; i < s.length(); i++){
+            if(s.charAt(i) < smallestChar){
+                smallestChar = s.charAt(i);
+                frequency = 1;
+            }else if(s.charAt(i) == smallestChar){
+                frequency++;
             }
         }
-        return wordFrequency.length - tail - 1;
-    }
-    
-    private int smallestCharFrequency(String word){
-        int[] frequencies = new int[26];
-        char smallest = word.charAt(0);
-        for(int i = 0; i < word.length(); i++){
-            char currentCh = word.charAt(i);
-            if(currentCh > smallest){
-                continue;
-            }
-            frequencies[currentCh - 'a'] += 1;
-            if(currentCh < smallest){
-                smallest = currentCh;
-            }
-        }
-        for(int frequency: frequencies){
-            if(frequency != 0){
-                return frequency;
-            }
-        }
-        return 0;
+        return frequency;
     }
 }
