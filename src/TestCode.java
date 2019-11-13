@@ -1,13 +1,11 @@
 import java.util.*;
 public class TestCode {
 	public static void main(String[] args) {
-		LargestSubarrayLengthKOA test = new LargestSubarrayLengthKOA();
-		int[] A = new int[] {
-				1,4,3,2,5
-		};
-		int[] subarray = test.largestSubarray(A, 3);
-		for(int i : subarray) {
-			System.out.print(i + ", ");
-		}
+		MaximumTime test = new MaximumTime();
+		System.out.println(test.maxTime("?4:5?"));
+		System.out.println(test.maxTime("23:5?"));
+		System.out.println(test.maxTime("2?:22"));
+		System.out.println(test.maxTime("0?:??"));
+		System.out.println(test.maxTime("??:??"));
 	}
 }
