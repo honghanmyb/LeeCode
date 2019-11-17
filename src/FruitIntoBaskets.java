@@ -1,40 +1,56 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class FruitIntoBaskets {
     public int totalFruit(int[] tree) {
-        boolean[] startPoint = new boolean[tree.length];
-        startPoint[0] = true;
-        int count = 1;
-        for(int i = 1; i < tree.length; i++){
-            if(tree[i] != tree[i - 1]){
-                startPoint[i] = true;
-                count++;
-            }
-        }
-        int[][] table = new int[count][2];
-        
-        int max = 0;
+        boolean[] endPoint = new boolean[tree.length];
+        endPoint[tree.length - 1] = true;
+        List<int[]> table = new ArrayList<>();
+        int currentCount = 0;
         for(int i = 0; i < tree.length; i++){
-            if(!startPoint[i]){
+            if( i < tree.length - 1 && tree[i] != tree[i + 1]){
+                endPoint[i] = true;
+            }
+            currentCount++;
+            if(!endPoint[i]){
                 continue;
             }
-            int current = 0;
-            int type1 = tree[i];
-            int type2 = -1;
-            for(int j = i; j < tree.length; j++){
-                if(tree[j] == type1){
-                    current++;
-                }else if(type2 == -1){
-                    type2 = tree[j];
-                    current++;
-                }else if(tree[j] == type2){
-                    current++;
-                }else{
-                    break;
-                }
-            }
-            max = Integer.max(max, current);
+            table.add(new int[]{tree[i], currentCount});
+            currentCount = 0;
         }
-        
+        if(table.size() <= 2){
+            return tree.length;
+        }
+        int[] first = table.get(0);
+        int firstTypePos = 0;
+        int[] second = table.get(1);
+        int secondTypePos = 1;
+        int nextPos = 0;
+        int max = 0, current = 0;
+        current += first[1];
+        current += second[1];
+        while(true){
+            nextPos = Integer.max(firstTypePos, secondTypePos) + 1;
+            if(nextPos >= table.size()){
+                max = Integer.max(max, current);
+                break;
+            }
+            int[] next = table.get(nextPos);
+            if(next[0] == first[0]){
+                current += next[1];
+                firstTypePos = nextPos;
+            }else if(next[0] == second[0]){
+                current += next[1];
+                secondTypePos = nextPos;
+            }else{
+                max = Integer.max(max, current);
+                firstTypePos = nextPos - 1;
+                first = table.get(firstTypePos);
+                secondTypePos = nextPos;
+                second = table.get(secondTypePos);
+                current = first[1] + second[1];
+            }
+        }
         return max;
     }
 }
