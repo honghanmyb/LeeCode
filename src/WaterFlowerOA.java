@@ -1,4 +1,6 @@
-
+//In OA, the two people refill the can at the same time
+//so, if there's one can cannot water the next plant, but another can still have enough water for next plant
+//both cans will be refill
 public class WaterFlowerOA {
 	public int numOfRefill(int[] plants, int capacity1, int capacity2) {
 		if(plants.length == 0) {

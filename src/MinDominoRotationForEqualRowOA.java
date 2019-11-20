@@ -1,4 +1,6 @@
-
+//The problem has changed to that given array A and B, and int K,
+//switch at most K times for value in A and B, find the largest num
+//you can get either in A or in B
 public class MinDominoRotationForEqualRowOA {
 	public int minDominoRotations(int[] A, int[] B) {
 		int minRotate = Integer.MAX_VALUE;
