@@ -29,7 +29,7 @@ public class ReadNCharactersGivenRead4 {
         }
         return current;
     }
-    
+
     private int read4(char[] buf4){
         return 0;
     }
