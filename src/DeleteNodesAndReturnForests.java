@@ -13,7 +13,7 @@ public class DeleteNodesAndReturnForests {
         iterate(root, null, roots, set, true);
         return roots;
     }
-    
+
     private void iterate(TreeNode currentNode, TreeNode parent, List<TreeNode> roots, Set<Integer> set, boolean isRoot){
         if(currentNode == null){
             return;
