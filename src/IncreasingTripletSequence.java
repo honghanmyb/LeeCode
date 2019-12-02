@@ -2,18 +2,18 @@ import java.util.TreeSet;
 
 public class IncreasingTripletSequence {
     public boolean increasingTriplet(int[] nums) {
-        TreeSet<Integer> set = new TreeSet<>();
         if(nums.length < 3){
             return false;
         }
         int min = nums[0];
+        int mid = Integer.MAX_VALUE;
         for(int num: nums){
             if(num > min){
-                Integer lower = set.lower(num);
-                if(lower != null){
+                if(num > mid){
                     return true;
+                }else{
+                    mid = num;
                 }
-                set.add(num);
             }else{
                 min = num;
             }
