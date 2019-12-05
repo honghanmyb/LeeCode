@@ -7,17 +7,17 @@ public class EncodeAndDecodeString {
             return "#";
         }
         int currentLength = strs.get(0).length();
-        String header = "0," + currentLength;
+        StringBuilder header = new StringBuilder("0," + currentLength);
         for(int i = 1; i < strs.size(); i++){
             currentLength += strs.get(i).length();
-            header += "," + currentLength;
+            header.append(",").append(currentLength);
         }
-        header += "#";
-        String body = "";
+        header.append("#");
+        StringBuilder body = new StringBuilder();
         for(String s : strs){
-            body += s;
+            body.append(s);
         }
-        return header + body;
+        return header.toString() + body;
     }
 
     // Decodes a single string to a list of strings.
