@@ -16,16 +16,28 @@ public class SplitArrayIntoConsecutiveSubsequence {
                 continue;
             }
             if(sequenceMap.containsKey(num - 1)){
-                putEntry(sequenceMap, num - 1, -1);
-                putEntry(sequenceMap, num, 1);
-                putEntry(countMap, num, -1);
-            }else if(countMap.containsKey(num + 1) && countMap.containsKey(num + 2)){
-                putEntry(sequenceMap, num + 2, 1);
-                putEntry(countMap, num, -1);
-                putEntry(countMap, num + 1, -1);
-                putEntry(countMap, num + 2, -1);
-            }else {
-                return false;
+                int sequenceCount = sequenceMap.get(num - 1);
+                int numCount = countMap.get(num);
+                int min = Math.min(sequenceCount, numCount);
+                putEntry(sequenceMap, num - 1, -min);
+                putEntry(sequenceMap, num, min);
+                putEntry(countMap, num, -min);
+            }
+            if(countMap.containsKey(num)){
+                if(countMap.containsKey(num + 1) && countMap.containsKey(num + 2)){
+                    int first = countMap.get(num);
+                    int second = countMap.get(num + 1);
+                    int third = countMap.get(num + 2);
+                    if(first > second || first > third){
+                        return false;
+                    }
+                    putEntry(sequenceMap, num + 2, first);
+                    putEntry(countMap, num, -first);
+                    putEntry(countMap, num + 1, -first);
+                    putEntry(countMap, num + 2, -first);
+                }else{
+                    return false;
+                }
             }
         }
         return true;
