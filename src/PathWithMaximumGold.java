@@ -3,72 +3,34 @@ import java.util.List;
 
 public class PathWithMaximumGold {
     public int getMaximumGold(int[][] grid) {
-        List<int[]> goldGrids = new ArrayList<>();
+        int max = 0;
+        boolean[][] hasUsed = new boolean[grid.length][grid[0].length];
         for(int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[0].length; j++){
                 if(grid[i][j] != 0){
-                    goldGrids.add(new int[]{i, j, grid[i][j]});
+                    max = Math.max(max, findMax(grid, i, j, hasUsed));
                 }
             }
         }
-        List<int[]> startGrids = new ArrayList<>();
-        for(int[] goldGrid : goldGrids){
-            if(findIndex(goldGrids, goldGrid[0], goldGrid[1]).size() <= 2){
-                startGrids.add(goldGrid);
-            }
-        }
-        boolean[] hasUsed = new boolean[goldGrids.size()];
-        int maxGold = 0;
-        for(int[] startGrid: startGrids){
-            maxGold = Math.max(maxGold, findGold(goldGrids, hasUsed, indexOf(startGrid, goldGrids)));
-        }
-        return maxGold;
+        return max;
     }
-
-    private int findGold(List<int[]> goldGrids, boolean[] hasUsed, int index){
-        int[] currentGrid = goldGrids.get(index);
+    private int findMax(int[][] grid, int row, int column, boolean[][] hasUsed){
+        hasUsed[row][column] = true;
+        int current = grid[row][column];
         int max = 0;
-        hasUsed[index] = true;
-        List<Integer> nextIndexes = findIndex(goldGrids, currentGrid[0], currentGrid[1]);
-        for(int nextIndex : nextIndexes){
-            if(nextIndex != -1 && !hasUsed[nextIndex]){
-                max = Math.max(max, findGold(goldGrids, hasUsed, nextIndex));
-            }
+        if(row > 0 && grid[row - 1][column] > 0 && !hasUsed[row - 1][column]){
+            max = Math.max(max, findMax(grid, row - 1, column, hasUsed));
         }
-        hasUsed[index] = false;
-        return currentGrid[2] + max;
-    }
-
-    private int indexOf(int[] grid, List<int[]> goldGrids){
-        for(int i = 0; i < goldGrids.size(); i++){
-            if(goldGrids.get(i) == grid){
-                return i;
-            }
+        if(row < grid.length - 1 && grid[row + 1][column] > 0 && !hasUsed[row + 1][column]){
+            max = Math.max(max, findMax(grid, row + 1, column, hasUsed));
         }
-        return 0;
-    }
-
-    private List<Integer> findIndex(List<int[]> goldGrids, int row, int column){
-        List<Integer> indexes = new ArrayList<>(4);
-        for(int i = 0; i < goldGrids.size(); i++){
-            int[] currentGrid = goldGrids.get(i);
-            if(currentGrid[0] == row - 1 && currentGrid[1] == column){
-                indexes.add(i);
-                continue;
-            }
-            if(currentGrid[0] == row + 1 && currentGrid[1] == column){
-                indexes.add(i);
-                continue;
-            }
-            if(currentGrid[0] == row && currentGrid[1] == column - 1){
-                indexes.add(i);
-                continue;
-            }
-            if(currentGrid[0] == row && currentGrid[1] == column + 1){
-                indexes.add(i);
-                continue;
-            }
+        if(column > 0 && grid[row][column - 1] > 0 && !hasUsed[row][column - 1]){
+            max = Math.max(max, findMax(grid, row, column - 1, hasUsed));
         }
-        return indexes;
+        if(column < grid[0].length - 1 && grid[row][column + 1] > 0 && !hasUsed[row][column + 1]){
+            max = Math.max(max, findMax(grid, row, column + 1, hasUsed));
+        }
+        hasUsed[row][column] = false;
+        return current + max;
     }
 }
