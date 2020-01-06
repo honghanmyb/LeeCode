@@ -10,13 +10,13 @@ public class SearchSuggestionSystem {
         List<List<String>> suggestions = new ArrayList<>();
         TrieNode curNode = head;
         for(int i = 0; i < searchWord.length(); i++){
+            List<String> suggestion = new ArrayList<>();
             if(curNode != null){
                 char curCh = searchWord.charAt(i);
-                suggestions.add(findSuggestion(curNode, curCh));
+                findAll(suggestion, curNode.nextChars[curCh - 'a']);
                 curNode = curNode.nextChars[curCh - 'a'];
-            }else{
-                suggestions.add(new ArrayList<>());
             }
+            suggestions.add(suggestion);
         }
         return suggestions;
     }
@@ -34,17 +34,11 @@ public class SearchSuggestionSystem {
         addWord(curNode.nextChars[nextCh - 'a'], word, chPos + 1);
     }
 
-    private List<String> findSuggestion(TrieNode curNode, char curCh){
-        List<String> suggestion = new ArrayList<>();
-        if(curNode.nextChars[curCh - 'a'] == null){
-            return suggestion;
-        }
-        findAll(suggestion, curNode.nextChars[curCh - 'a']);
-        return suggestion;
-    }
-
     private void findAll(List<String> suggestion, TrieNode nextNode){
         if(suggestion.size() == 3){
+            return;
+        }
+        if(nextNode == null){
             return;
         }
         if(nextNode.isWord){
