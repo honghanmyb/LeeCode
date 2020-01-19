@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MinNumberOfTabsToWaterGarden {
+public class MinNumberOfTapsToWaterGarden {
     public int minTaps(int n, int[] ranges) {
         List<int[]> intervals = new ArrayList<>();
         for(int i = 0; i < ranges.length; i++){
