@@ -23,26 +23,35 @@ public class StrobogrammaticNumberII {
         map.put('9', '6');
         possibleChars = new char[]{'0', '1', '6', '8', '9'};
         nums = new ArrayList<>();
+        char[] digits = new char[n];
+        int startIndex = n / 2;
         if(n % 2 == 0){
-            findAllNums(n / 2, "");
+            findAllNums(startIndex - 1, startIndex, digits);
         }else {
-            findAllNums(n / 2, "0");
-            findAllNums(n / 2, "1");
-            findAllNums(n / 2, "8");
+            digits[startIndex] = '0';
+            findAllNums(startIndex - 1, startIndex + 1, digits);
+            digits[startIndex] = '1';
+            findAllNums(startIndex - 1, startIndex + 1, digits);
+            digits[startIndex] = '8';
+            findAllNums(startIndex - 1, startIndex + 1, digits);
         }
         return nums;
     }
 
-    private void findAllNums(int remainCount, String curString){
-        if(remainCount == 0){
-            nums.add(curString);
+    private void findAllNums(int headIndex, int tailIndex, char[] digits){
+        if(headIndex < 0){
+            nums.add(new String(digits));
             return;
         }
         for(int i = 1; i < possibleChars.length; i++){
-            findAllNums(remainCount - 1, possibleChars[i] + curString + map.get(possibleChars[i]));
+            digits[headIndex] = possibleChars[i];
+            digits[tailIndex] = map.get(possibleChars[i]);
+            findAllNums(headIndex - 1, tailIndex + 1, digits);
         }
-        if(remainCount > 1){
-            findAllNums(remainCount - 1, possibleChars[0] + curString + map.get(possibleChars[0]));
+        if(headIndex > 0){
+            digits[headIndex] = '0';
+            digits[tailIndex] = '0';
+            findAllNums(headIndex - 1, tailIndex + 1, digits);
         }
     }
 }
