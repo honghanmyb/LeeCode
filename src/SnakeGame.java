@@ -1,4 +1,6 @@
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 public class SnakeGame {
 
@@ -7,20 +9,25 @@ public class SnakeGame {
      @param height - screen height
      @param food - A list of food positions
      E.g food = [[1,1], [1,0]] means the first food is positioned at [1,1], the second is at [1,0]. */
-    private int screenWidth;
-    private int screenHeight;
-    private LinkedList<int[]> snake;
+    private int curRow;
+    private int curColumn;
+    private int maxRow;
+    private int maxColumn;
+    private LinkedList<Integer> snake;
     private int curFoodPosIndex;
     private int[][] food;
-    private boolean[][] taken;
+    private Set<Integer> taken;
     public SnakeGame(int width, int height, int[][] food) {
-        int[] head = new int[]{0, 0};
         snake = new LinkedList<>();
-        snake.addFirst(head);
+        snake.addFirst(0);
+        curRow = 0;
+        curColumn = 0;
         curFoodPosIndex = 0;
         this.food = food;
-        this.taken = new boolean[height][width];
-        this.taken[0][0] = true;
+        taken = new HashSet<>();
+        taken.add(0);
+        maxRow = height - 1;
+        maxColumn = width - 1;
     }
 
     /** Moves the snake.
@@ -28,48 +35,45 @@ public class SnakeGame {
      @return The game's score after the move. Return -1 if game over.
      Game over when snake crosses the screen boundary or bites its body. */
     public int move(String direction) {
-        int[] head = snake.getFirst();
-        int newHeadRow = head[0];
-        int newHeadColumn = head[1];
         switch(direction.charAt(0)){
             case 'U' :{
-                --newHeadRow;
+                --curRow;
                 break;
             }
             case 'D' :{
-                ++newHeadRow;
+                ++curRow;
                 break;
             }
             case 'L' :{
-                --newHeadColumn;
+                --curColumn;
                 break;
             }
             default :{
-                ++newHeadColumn;
+                ++curColumn;
                 break;
             }
         }
 
-        if(newHeadRow < 0 || newHeadColumn < 0 || newHeadRow >= this.taken.length || newHeadColumn >= this.taken[0].length){
+        if(curRow < 0 || curColumn < 0 || curRow > maxRow || curColumn > maxColumn){
             return -1;
         }
-        int[] newCell = new int[]{newHeadRow, newHeadColumn};
+        int newCell = curRow * (maxColumn + 1) + curColumn;
         int foodRow = -1;
         int foodColumn = -1;
         if(curFoodPosIndex < food.length){
             foodRow = food[curFoodPosIndex][0];
             foodColumn = food[curFoodPosIndex][1];
         }
-        if(newHeadRow == foodRow && newHeadColumn == foodColumn){
+        if(curRow == foodRow && curColumn == foodColumn){
             curFoodPosIndex++;
         }else{
-            int[] last = snake.removeLast();
-            this.taken[last[0]][last[1]] = false;
+            int last = snake.removeLast();
+            taken.remove(last);
         }
-        if(this.taken[newCell[0]][newCell[1]]){
+        if(taken.contains(newCell)){
             return -1;
         }
-        this.taken[newCell[0]][newCell[1]] = true;
+        taken.add(newCell);
         snake.addFirst(newCell);
         return snake.size() - 1;
     }
