@@ -1,142 +1,95 @@
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 public class AutocompleteSystem {
-    private RecordTrie dummy;
-    private String previousInput;
-    private RecordTrie currentTrie;
-    private int totalWordCount;
+    private Node head;
+    private Node curNode;
+    private String curSentence;
+
     public AutocompleteSystem(String[] sentences, int[] times) {
-        dummy = new RecordTrie("", 0);
-        for(int i = 0; i < sentences.length; i++){
-            dummy.insert(sentences[i], times[i]);
+        this.head = new Node('$', "");
+        this.curNode = head;
+        this.curSentence = "";
+        for (int i = 0; i < times.length; i++) {
+            insert(sentences[i], times[i], head, 0);
         }
-        previousInput = "";
-        currentTrie = dummy;
-        totalWordCount = sentences.length;
     }
-    
+
     public List<String> input(char c) {
-        if(c == '#'){
-            if(!this.previousInput.isEmpty()){
-                dummy.insert(this.previousInput, 1);
+        if (c == '#') {
+            curNode.time++;
+            curNode = head;
+            return new ArrayList<>();
+        }
+        if (!curNode.map.containsKey(c)) {
+            curNode.map.put(c, new Node(c, curNode.sentence + c));
+        }
+        curNode = curNode.map.get(c);
+        PriorityQueue<Node> pq = new PriorityQueue<>(3, (node1, node2) -> {
+            if (node1.time != node2.time) {
+                return node1.time - node2.time;
             }
-            this.previousInput = "";
-            this.currentTrie = this.dummy;
-            this.totalWordCount += 1;
-            return new ArrayList<>(); 
-        }
-        if(this.currentTrie == null){
-            previousInput += c;
-            return new ArrayList<>();
-        }
-        this.currentTrie = c == ' '? this.currentTrie.nextWords[0]: this.currentTrie.nextWords[c - 'a' + 1];
-        if(currentTrie == null){
-            previousInput += c;
-            return new ArrayList<>();
-        }
-        PriorityQueue<HotWord> hotWords = new PriorityQueue<>(this.totalWordCount, (word1, word2) -> {
-           if(word1.time != word2.time){
-               return word2.time - word1.time;
-           }else{
-               return word1.word.compareTo(word2.word);
-           }
+            return node2.sentence.compareTo(node1.sentence);
         });
-         currentTrie.search(hotWords, previousInput);
-        // Collections.sort(hotWords, (word1, word2) -> {
-        //    if(word1.time != word2.time){
-        //        return word2.time - word1.time;
-        //    }else{
-        //        return word1.word.compareTo(word2.word);
-        //    }
-        // });
-        int size = Integer.min(3, hotWords.size());
-        List<String> topHotWords = new ArrayList<>(size);
-        for(int i = 0; i < size; i++){
-            topHotWords.add(hotWords.poll().word);
+        searchCurNode(curNode, pq);
+        if (pq.size() == 0) {
+            return new ArrayList<>();
         }
-        previousInput += c;
-        return topHotWords;
+        String[] sentences = new String[pq.size()];
+        for (int i = sentences.length - 1; i >= 0; i--) {
+            sentences[i] = pq.poll().sentence;
+        }
+        return Arrays.asList(sentences);
     }
-    
-    private class RecordTrie{
+
+    private void insert(String sentence, int time, Node curNode, int nextChIndex) {
+        if (nextChIndex == sentence.length()) {
+            curNode.time = time;
+            return;
+        }
+        char nextCh = sentence.charAt(nextChIndex);
+        if (!curNode.map.containsKey(nextCh)) {
+            curNode.map.put(nextCh, new Node(nextCh, curNode.sentence + nextCh));
+        }
+        insert(sentence, time, curNode.map.get(nextCh), nextChIndex + 1);
+    }
+
+    private void searchCurNode(Node curNode, PriorityQueue<Node> pq) {
+        if (curNode.time > 0) {
+            addToPq(curNode, pq);
+        }
+        for (Map.Entry<Character, Node> entry : curNode.map.entrySet()) {
+            searchCurNode(entry.getValue(), pq);
+        }
+    }
+
+    private void addToPq(Node curNode, PriorityQueue<Node> pq) {
+        if (pq.size() < 3) {
+            pq.add(curNode);
+            return;
+        }
+        Node headNode = pq.peek();
+        if (curNode.time > headNode.time || curNode.time == headNode.time && curNode.sentence.compareTo(headNode.sentence) <= 0) {
+            pq.poll();
+            pq.add(curNode);
+        }
+    }
+
+    private class Node {
         char ch;
-        boolean isEnd;
+        String sentence;
         int time;
-        RecordTrie[] nextWords;
-        
-        public RecordTrie(String sentence, int time){
-            //first char of sentence is stored in this trie
-            nextWords = new RecordTrie[27];
-            if(sentence.isEmpty()){
-                return;
-            }
-            this.ch = sentence.charAt(0);
-            if(sentence.length() == 1){
-                this.isEnd = true;
-                this.time = time;
-                return;
-            }
-            String remainingSentence = sentence.substring(1);
-            char nextCh = remainingSentence.charAt(0);
-            if(nextCh == ' '){
-                nextWords[0] = new RecordTrie(remainingSentence, time);
-            }else{
-                nextWords[nextCh - 'a' + 1] = new RecordTrie(remainingSentence, time);
-            }
-        }
-        
-        public void insert(String sentence, int time){
-            //first char of sentence is stored in next trie
-            if(sentence.isEmpty()){
-                if(!this.isEnd){
-                    this.isEnd = true;
-                    this.time = time;
-                }else{
-                    this.time += time;
-                }
-                return;
-            }
-            char firstCh = sentence.charAt(0);
-            if(firstCh == ' '){
-                if(this.nextWords[0] == null){
-                    this.nextWords[0] = new RecordTrie(sentence, time);
-                }else{
-                    this.nextWords[0].insert(sentence.substring(1), time);
-                }
-            }else{
-                if(this.nextWords[firstCh - 'a' + 1] == null){
-                    this.nextWords[firstCh - 'a' + 1] = new RecordTrie(sentence, time);
-                }else{
-                    this.nextWords[firstCh - 'a' + 1].insert(sentence.substring(1), time);
-                }
-            }
-        }
-        
-        public void search(PriorityQueue<HotWord> hotWords, String previous){
-            if(this.isEnd){
-                hotWords.add(new HotWord(previous + this.ch, this.time));
-            }
-            if(this.nextWords == null){
-                return;
-            }
-            for(RecordTrie nextWord: nextWords){
-                if(nextWord != null){
-                    nextWord.search(hotWords, previous + this.ch);
-                }
-            }
-        }
-    }
-    
-    private class HotWord{
-        String word;
-        int time;
-        
-        public HotWord(String word, int time){
-            this.word = word;
-            this.time = time;
+        Map<Character, Node> map;
+
+        Node(char ch, String sentence) {
+            this.ch = ch;
+            this.sentence = sentence;
+            this.time = 0;
+            this.map = new HashMap<>();
         }
     }
 }
