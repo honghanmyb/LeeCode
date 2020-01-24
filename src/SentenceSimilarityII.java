@@ -1,32 +1,38 @@
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class SentenceSimilarityII {
     public boolean areSentencesSimilarTwo(String[] words1, String[] words2, List<List<String>> pairs) {
         if(words1.length != words2.length){
             return false;
         }
-        Map<String, Set<String>> map = new HashMap<>();
+        Map<String, Integer> wordToId = new HashMap<>();
+        int id = 0;
+        for(List<String> pair : pairs){//get total word count, index word to map
+            String word1 = pair.get(0);
+            String word2 = pair.get(1);
+            if(word1.equals(word2)){
+                continue;
+            }
+            id = addIdToMap(word1, id, wordToId);
+            id = addIdToMap(word2, id, wordToId);
+        }
+
+        int[] ids = new int[id + 1];//initial setup
+        for(int i = 0; i < ids.length; i++){
+            ids[i] = i;
+        }
+
         for(List<String> pair : pairs){
             String word1 = pair.get(0);
             String word2 = pair.get(1);
             if(word1.equals(word2)){
                 continue;
             }
-            if(!map.containsKey(word1)){
-                Set<String> set = new HashSet<>();
-                set.add(word1);
-                map.put(word1, set);
-            }
-            if(!map.containsKey(word2)){
-                Set<String> set = new HashSet<>();
-                set.add(word2);
-                map.put(word2, set);
-            }
-            union(map, word1, word2);
+            int id1 = wordToId.get(word1);
+            int id2 = wordToId.get(word2);
+            union(id1, id2, ids);
         }
         for(int i = 0; i < words1.length; i++){
             String word1 = words1[i];
@@ -34,29 +40,37 @@ public class SentenceSimilarityII {
             if(word1.equals(word2)){
                 continue;
             }
-            Set<String> set1 = map.get(word1);
-            Set<String> set2 = map.get(word2);
-            if(set1 != null &&set2 != null && set1 == set2){
-                continue;
+            if(!wordToId.containsKey(word1) || !wordToId.containsKey(word2)){
+                return false;
             }
-            return false;
+            int id1 = wordToId.get(word1);
+            int id2 = wordToId.get(word2);
+            if(getFather(ids, id1) != getFather(ids, id2)){
+                return false;
+            }
         }
         return true;
     }
 
-    private void union(Map<String, Set<String>> map, String word1, String word2){
-        Set<String> set1 = map.get(word1);
-        Set<String> set2 = map.get(word2);
-        if(set1 == set2){
-            return;
+    private void union(int id1, int id2, int[] ids){
+        int id1Father = getFather(ids, id1);
+        int id2Father = getFather(ids, id2);
+        ids[Math.max(id1Father, id2Father)] = Math.min(id1Father, id2Father);
+    }
+
+    private int getFather(int[] ids, int id){
+        if(ids[id] == id){
+            return id;
         }
-        Set<String> unionSet = set1.size() > set2.size() ? set1 : set2;
-        Set<String> sourceSet = set1.size() > set2.size() ? set2 : set1;
-        unionSet.addAll(sourceSet);
-        for(String word : sourceSet){
-            map.put(word, unionSet);
+        ids[id] = getFather(ids, ids[id]);
+        return ids[id];
+    }
+
+    private int addIdToMap(String word, int curId, Map<String, Integer> map){
+        if(map.containsKey(word)){
+            return curId;
         }
-        map.put(word1, unionSet);
-        map.put(word2, unionSet);
+        map.put(word, curId);
+        return curId + 1;
     }
 }
