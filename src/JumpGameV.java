@@ -32,7 +32,6 @@ public class JumpGameV {
         }
         while(!queue.isEmpty()){
             int curIndex = queue.poll();
-
             int curMaxJump = 1;
             int curMax = arr[curIndex];
             boolean canJump = true;
