@@ -4,10 +4,11 @@ import java.util.List;
 
 public class EmployeeFreeTime {
     public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
-        List<Interval> mergedInterval = schedule.get(0);
-        for(int i = 1; i < schedule.size(); i++){
-            mergedInterval = merge(mergedInterval, schedule.get(i));
+        List<Interval> mergedInterval = new ArrayList<>();
+        for(List<Interval> intervals : schedule){
+            mergedInterval.addAll(intervals);
         }
+        mergedInterval = merge(mergedInterval);
         if(mergedInterval.size() == 1){
             return new ArrayList<>();
         }
@@ -18,15 +19,14 @@ public class EmployeeFreeTime {
         return freeTime;
     }
 
-    private List<Interval> merge(List<Interval> schedule1, List<Interval> schedule2){
-        schedule1.addAll(schedule2);
-        Collections.sort(schedule1, (interval1, interval2) -> {
+    private List<Interval> merge(List<Interval> schedule){
+        Collections.sort(schedule, (interval1, interval2) -> {
             if(interval1.start != interval2.start) return interval1.start - interval2.start;
             return interval1.end - interval2.end;
         });
         Interval pending = null;
         List<Interval> merged = new ArrayList<>();
-        for(Interval interval : schedule1){
+        for(Interval interval : schedule){
             if(pending == null){
                 pending = interval;
                 continue;
@@ -41,7 +41,6 @@ public class EmployeeFreeTime {
         merged.add(pending);
         return merged;
     }
-
     private class Interval{
         int start;
         int end;
